@@ -1,0 +1,12 @@
+[submodule "Storage"]
+	path = Storage
+	url = https://github.com/Comp413-F18/DatelineRice2.0-Storage
+[submodule "NLP"]
+	path = NLP
+	url = https://github.com/Comp413-F18/DatelineRice2.0-NLP
+[submodule "UIUX"]
+	path = UIUX
+	url = https://github.com/Comp413-F18/DatelineRice2.0-UIUX
+[submodule "DataCollection"]
+	path = DataCollection
+	url = https://github.com/Comp413-F18/DatelineRice2.0-DataCollection
