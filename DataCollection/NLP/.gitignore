@@ -1,0 +1,6 @@
+
+imdb_dataset/
+
+\.ipynb_checkpoints/
+
+__pycache__/
