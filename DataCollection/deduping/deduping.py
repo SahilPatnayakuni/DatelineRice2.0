@@ -100,7 +100,74 @@ def print_matrix(matrix):
         print(ele)
     print('---------------')
 
+def split(string):
+    """
+    Splits a string into words, to speed up string edit distance.
+    """
+    return list(filter(lambda x: x != ' ', re.split(r'(\b[^\s]+\b)', string)))
 
+def isRice(string):
+    """
+    Returns T/F if a word is 'Rice'
+    """
+    return string == 'Rice' or string == 'rice' or string == 'Rice\'s'
+
+def rice_idxs(data):
+    """
+    Returns a list of indices of 'rice' words in an article.
+    """
+    idxs = []
+    for i in range(len(data)):
+        if isRice(data[i]):
+            idxs.append(i)
+    return idxs
+
+def score_idxs(string1, idx1, string2, idx2, rng = 100):
+    """
+    For two strings, and two indices into respective strings, returns the string
+    edit distance between string1[idx1-rng:idx1+rng] and
+    string2[idx2-rng:idx2+rng], normalized to portion of chars changed.
+    """
+    start1 = max(0, idx1 - rng)
+    end1 = min(len(string1), idx1 + rng)
+    start2 = max(0, idx2 - rng)
+    end2 = min(len(string2), idx2 + rng)
+    return string_edit_check(string1[start1:end1], string2[start2:end2])
+
+def score_rices(string1, string2, rng = 100):
+    """
+    Returns the sum of scores over:
+     - for each rice mention in string1:
+      - find minimum string edit distance of that rice mention and any rice
+        mention in string 2, +- rng characters
+    Normalizes sum to portion of chars changed (0-1)
+    """
+    data1 = split(string1)
+    data2 = split(string2)
+    idxs1 = rice_idxs(data1)
+    idxs2 = rice_idxs(data1)
+    if len(idxs1) == 0 or len(idxs2) == 0:
+        print 'no rice mentions'
+        return string_edit_check(data1, data2) / min(len(data1), len(data2))
+    else:
+        total = 0
+        for idx1 in idxs1:
+            min_match = float('inf')
+            for idx2 in idxs2:
+                min_match = min(min_match, score_idxs(data1, idx1, data2, idx2, rng))
+            total += min_match
+        return total * 1.0 / (len(idxs1) * rng * 2)
+
+
+def score_split(string1, string2):
+    """
+    Scores string edit distance between words in string1 and words in string2.
+    """
+    data1 = re.split(r'(\b[^\s]+\b)', string1)
+    data2 = re.split(r'(\b[^\s]+\b)', string2)
+    data1 = list(filter(lambda x: x != ' ', data1))
+    data2 = list(filter(lambda x: x != ' ', data2))
+    return string_edit_check(data1, data2)
 
 
 def testing():
