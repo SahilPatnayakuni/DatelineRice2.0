@@ -1,4 +1,9 @@
-
+"""
+Data scrapper. 
+- Scrapes invalid, valid article texts.
+- Store scraped results in npz format.
+"""
+import argparse
 from bs4 import BeautifulSoup
 import requests, sys
 from newspaper import Article
@@ -106,5 +111,28 @@ class InvalidDataScraper:
             else:
                 print('no valid text found')
         np.savez('invalid_texts.npz', text=x_train)
-        
+
+
+parser = argparse.ArgumentParser(description='Dateline Scraper')
+parser.add_argument('--valid',
+    action='store_true',
+    help='Scrape valid articles flag' )
+parser.add_argument('--invalid',
+    action='store_true',
+    help='Scrape invalid articles flag' )
+# TODO concatenate flag - default overwrite.
+# TODO date range
+
+
+if __name__ == "__main__":
+    args = parser.parse_args()
+    if args.valid:
+        scraper = ValidDataScraper(page_num_max=100)
+        scraper.get_prev_dateline()
+    if args.invalid:
+        scraper = InvalidDataScraper()
+        scraper.get_invalid()
+
+
+
 
