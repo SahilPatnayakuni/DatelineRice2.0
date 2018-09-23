@@ -86,16 +86,3 @@ def tag_people_with_text(text, ner_model):
 				print("Could not find: ", people)
 
 	return (correct_match, net_id_set)
-
-ner_model = NER_Model(PATH_TO_CLASSIFIER, PATH_TO_JAR)
-
-# Dan Wallach should be found in this article
-#print(tag_people('https://theconversation.com/4-ways-to-defend-democracy-and-protect-every-voters-ballot-101765'))
-
-# Sam Solomon should be found in this article
-#print(tag_people('https://www.nbcnews.com/mach/science/climate-change-could-affect-human-evolution-here-s-how-ncna907276?cid=public-rss_20180907'))
-
-# Jim Krane should be found in this article
-#print(tag_people('https://www.axios.com/saudi-arabia-touts-low-crude-oil-carbon-emissions-505c2c58-e776-48f8-9dd1-1020efed08fa.html'))
-
-#print(tag_people('http://bit.ly/2LxbF50', ner_model))

@@ -52,34 +52,3 @@ def get_article_links(article):
 		list_articles.append((string_text, urls))
 
 	return list_articles
-
-if __name__ == "__main__":
-	main_urls = get_mainpage_links()
-	print(get_article_links(main_urls.pop()))
-
-	# for url in main_urls:
-	# 	curr_article_links = get_article_links(url)
-
-		# for link in curr_article_links:
-		# 	source = requests.get(link, timeout=5)
-		# 	BS = BeautifulSoup(source.content, "html.parser")
-		# 	print("LINK: " + link + "\n")
-		# 	print('\tURL: ' + source.url + "\n")
-			
-		# 	try:
-		# 		print ('\t' + BS.find('title').text + "\n")
-		# 	except Exception as e:
-		# 		print("Could not find title")
-
-		# 	article = Article(source.url)
-		# 	article.download()
-
-		# 	if len(sys.argv) > 1 and sys.argv[1] == "--content":
-		# 		print(article.text)
-
-		# 	article.parse()
-		# 	print("\tAUTHORS: " + str(article.authors) + "\n")
-		# 	print("\tPUBLISH DATE: " + str(article.publish_date) + "\n")
-		# 	article.nlp()
-		# 	print("\tKEYWORDS: " + str(article.keywords) + "\n")
-		# 	print("\tSUMMARY: " + str(article.summary) + "\n")
