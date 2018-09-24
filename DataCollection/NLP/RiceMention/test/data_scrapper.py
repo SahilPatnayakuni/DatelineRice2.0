@@ -8,34 +8,40 @@ from bs4 import BeautifulSoup
 import requests, sys
 from newspaper import Article
 from invalid_urls import invalid_text_urls
+from datetime import datetime, timedelta
 import numpy as np
 
 
 DATELINE_LINK = 'http://news.rice.edu/category/datelinrice/page/'
+DATELINE_HEADER = 'http://news.rice.edu/'
+DATE_FORMAT = '%Y/%m/%d'
 
 class ValidDataScraper:
-    def __init__(self, page_num_max=100):
+    def __init__(self, start_date, end_date, file_name, page_num_max=100):
         self.page_num_max = page_num_max
+        self.start_date = start_date
+        self.end_date = end_date
+        self.file_name = file_name
 
     def get_mainpage_links(self):
-        print("Getting main page links...")
-
-        page_num = 1
+        """
+        Input: 
+            - start_date : A str style of 2018/07/01
+            - end_date : same as start_date
+        Output:
+            - http://news.rice.edu/{YYYY}/{MM}/{DD}/dateline-rice-for*
+        """
         urls = set()
 
-        while page_num < self.page_num_max:
-            page_link = DATELINE_LINK + str(page_num)
-            page_response = requests.get(page_link, timeout=5)
-            if (page_response.status_code == 404):
-                break
-            page_content = BeautifulSoup(page_response.content, "html.parser")
+        start = datetime.strptime(self.start_date, DATE_FORMAT)
+        end = datetime.strptime(self.end_date, DATE_FORMAT)
 
-            for a_tag in page_content.find_all("a"):
-                link = str(a_tag.get('href'))
-                if link and 'dateline-rice-for' in link:
-                    urls.add(link)
-            page_num += 1
+        while start < end:
+            urls.add(DATELINE_HEADER + start.strftime(DATE_FORMAT) + '/dateline-rice-for*')
+            start = start + timedelta(days=1)
+
         return urls        
+
 
     def get_article_links(self, article):
         print("Getting article links for " + article)
@@ -85,11 +91,11 @@ class ValidDataScraper:
         except KeyboardInterrupt:
             print("Caught keyboard interrupt, exiting")
 
-        np.savez(f'valid_texts{i}.npz', text=x_train)
+        np.savez('{file_name}.npz'.format(file_name=self.file_name), text=x_train) # use the date range and concatenate flag
+        print("Valid dataset ready.")
 
 
 class InvalidDataScraper:
-
     def __init__(self):
         pass
     
@@ -101,7 +107,11 @@ class InvalidDataScraper:
                 article = Article(link)
                 article.download()
                 article.parse()
-            except:
+            except KeyboardInterrupt:
+                print("Caught keyboard interrupt, exiting")
+                raise KeyboardInterrupt
+            except Exception as e:
+                print('{} occured'.format(e))
                 continue
             print(f"{i}. {link}")  
             text = article.text
@@ -111,7 +121,10 @@ class InvalidDataScraper:
             else:
                 print('no valid text found')
         np.savez('invalid_texts.npz', text=x_train)
+        print("Invalid dataset ready.")
 
+# x = ValidDataScraper("x", "y")
+# print(x.get_article_links("http://news.rice.edu/2014/04/07/dateline-rice-for*"))
 
 parser = argparse.ArgumentParser(description='Dateline Scraper')
 parser.add_argument('--valid',
@@ -120,14 +133,20 @@ parser.add_argument('--valid',
 parser.add_argument('--invalid',
     action='store_true',
     help='Scrape invalid articles flag' )
-# TODO concatenate flag - default overwrite.
-# TODO date range
+parser.add_argument('start_date', type=str, help='The start date in the format of {YYYY}/{MM}/{DD}')
+parser.add_argument('end_date', type=str, help='The end date in the format of {YYYY}/{MM}/{DD}')
+parser.add_argument('valid_file', type=str, help='The name of the valid dataset file')
 
+# TODO concatenate flag - default overwrite.
 
 if __name__ == "__main__":
     args = parser.parse_args()
     if args.valid:
-        scraper = ValidDataScraper(page_num_max=100)
+        scraper = ValidDataScraper(
+            start_date=args.start_date, 
+            end_date=args.end_date,
+            file_name=args.valid_file
+        )
         scraper.get_prev_dateline()
     if args.invalid:
         scraper = InvalidDataScraper()
