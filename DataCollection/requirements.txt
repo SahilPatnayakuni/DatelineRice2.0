@@ -1,0 +1,10 @@
+USING THE PACKAGE.BOX FROM SCRATCH:
+
+pip3.6 install webhoseio
+pip3.6 install beautifulsoup
+pip3.6 install requests
+pip3.6 install newspaper3k
+
+run python3.6 to get to interpreter
+import nltk
+nltk.download('punkt')
