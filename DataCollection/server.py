@@ -29,7 +29,7 @@ def handle_request(shared_queue):
         client_socket = client_info[0]
         client_addr = client_info[1]
 
-        client_socket.
+        client_socket.recv() #TODO figure out how to do this- parse only a full line of request ('\n'-terminated), because that's all that is used
 
         return
 
@@ -51,7 +51,6 @@ def producer(port_num, shared_queue):
         # Accept a request
         client_socket, client_addr = serversocket.accept()
 
-        client_socket.
 
         # Add it to the shared buffer:
         client_info = {client_socket, client_addr}
@@ -93,5 +92,5 @@ if __name__ == "__main__":
     # Spawn off a singular producer thread for accepting individual URL requests from the user
     prod = multiprocessing.dummy.Process(target=producer, args=(sys.argv[1], request_queue))
     prod.run()
-    # And then use this thread to do the chron job functionality
+    # And then use this thread to run the chron job functionality
     chron_job()
