@@ -14,4 +14,16 @@ def save_nickname_dict():
     pickle.dump(nicknames,f)
     f.close()
 
-save_nickname_dict()
+#save_nickname_dict()
+
+
+def nicknames(name):
+    pickle_in = open("nicknames.pkl","rb")
+    nickname_dict = pickle.load(pickle_in)
+    return nickname_dict[name]
+
+print(nicknames('harry'))
+print(nicknames('jim'))
+print(nicknames('susan'))
+print(nicknames('alan'))
+print(nicknames('alex'))
