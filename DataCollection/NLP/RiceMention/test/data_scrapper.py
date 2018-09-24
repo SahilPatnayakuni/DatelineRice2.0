@@ -93,7 +93,7 @@ class ValidDataScraper:
 
         np.savez('{file_name}.npz'.format(file_name=self.file_name), text=x_train) # use the date range and concatenate flag
         print("Valid dataset ready.")
-
+        
 
 class InvalidDataScraper:
     def __init__(self):
@@ -123,8 +123,6 @@ class InvalidDataScraper:
         np.savez('invalid_texts.npz', text=x_train)
         print("Invalid dataset ready.")
 
-# x = ValidDataScraper("x", "y")
-# print(x.get_article_links("http://news.rice.edu/2014/04/07/dateline-rice-for*"))
 
 parser = argparse.ArgumentParser(description='Dateline Scraper')
 parser.add_argument('--valid',
@@ -136,8 +134,6 @@ parser.add_argument('--invalid',
 parser.add_argument('start_date', type=str, help='The start date in the format of {YYYY}/{MM}/{DD}')
 parser.add_argument('end_date', type=str, help='The end date in the format of {YYYY}/{MM}/{DD}')
 parser.add_argument('valid_file', type=str, help='The name of the valid dataset file')
-
-# TODO concatenate flag - default overwrite.
 
 if __name__ == "__main__":
     args = parser.parse_args()
