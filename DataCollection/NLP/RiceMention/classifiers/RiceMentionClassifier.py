@@ -1,6 +1,7 @@
 # A super class that enforces all subclasses to
 # implement the method classify.
 from abc import ABC, abstractmethod
+from RiceMention.test.get_data_set import split_data
 
 class RiceMentionClassifier(ABC):
     def __init__(self):
@@ -22,9 +23,13 @@ class RiceMentionClassifier(ABC):
     def predict(self, input):
         pass
 
-    def load_data(self):
-        # TODO
-        pass
+    def load_data(self, test_ratio, validation_ratio):
+        self.train_data, self.test_data, self.validation = \
+            split_data(
+                test_ratio=test_ratio,
+                validation_ratio=validation_ratio
+            )
+        
 
     def get_train(self):
         return self.train_data
@@ -39,5 +44,5 @@ class RiceMentionClassifier(ABC):
         return self.predict(input)
     
     def k_fold(self, num_folds):
-        # TODO
+        # TODO use sklearn?
         pass
