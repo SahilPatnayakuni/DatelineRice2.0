@@ -118,5 +118,5 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-
+STATIC_ROOT = '/Users/namsunghak/Documents/sunghak/rice/fall18/COMP413/DatelineRice2.0/UIUX/Dateline/dateline_app/staticfiles'
 STATIC_URL = '/static/'
