@@ -3,6 +3,7 @@ from urllib.parse import urlparse
 import re
 import sys
 
+# Workaround to import a file from an outer directory
 sys.path.append("..")
 from shared_types import ArticleData, Outlet
 sys.path.pop()
