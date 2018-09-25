@@ -101,7 +101,7 @@ if __name__ == "__main__":
 
 	for article in all_articles:
 
-		extracted_data.append(extract_metadata(article.url, article))
+		extracted_data.append(extract_metadata(article))
 
 		if is_uniq_article(article) and is_valid_article(article):
 			# get people, look them up
