@@ -10,4 +10,4 @@ CREATE TABLE IF NOT EXISTS 'people' (
     'majors' json,
     'is_former' boolean,
     'graduation_year' int
-)
+);

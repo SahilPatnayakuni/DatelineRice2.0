@@ -17,4 +17,4 @@ CREATE TABLE IF NOT EXISTS 'mediamentions' (
     'status' boolean,
 
     FOREIGN KEY(related_mention_id) REFERENCES mediamentions(mention_id)
-)
+);
