@@ -1,10 +1,23 @@
-USING THE PACKAGE.BOX FROM SCRATCH:
-
-pip3.6 install webhoseio
-pip3.6 install beautifulsoup
-pip3.6 install requests
-pip3.6 install newspaper3k
-
-run python3.6 to get to interpreter
-import nltk
-nltk.download('punkt')
+beautifulsoup4==4.6.3
+bitly-api==0.3
+certifi==2018.8.24
+chardet==3.0.4
+cssselect==1.0.3
+feedfinder2==0.0.4
+feedparser==5.2.1
+idna==2.5
+jieba3k==0.35.1
+lxml==4.2.4
+newsapi-python==0.2.3
+newspaper3k==0.2.7
+nltk==3.3
+Pillow==5.2.0
+python-dateutil==2.7.3
+PyYAML==3.13
+requests==2.17.1
+requests-file==1.4.3
+six==1.11.0
+tinysegmenter==0.3
+tldextract==2.2.0
+urllib3==1.21.1
+webhoseio==0.5
