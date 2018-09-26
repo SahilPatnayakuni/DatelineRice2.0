@@ -7,7 +7,7 @@ Rice Mention Classifier Tester
 import argparse
 import sys
 
-from RiceMention.classifiers.BinaryClassifiers import *
+from RiceMention.classifiers.binary_classifiers import *
 from .test_data import dummy_data, dummy_label
 
 
