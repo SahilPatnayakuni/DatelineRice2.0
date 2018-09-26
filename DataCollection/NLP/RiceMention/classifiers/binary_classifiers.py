@@ -1,6 +1,8 @@
-from .RiceMentionClassifier import RiceMentionClassifier
-from collections import defaultdict
 import string
+from collections import defaultdict
+
+from RiceMention.core.classifer import RiceMentionClassifier
+
 
 class ContainsRiceClassifier(RiceMentionClassifier):
     def __init__(self):
