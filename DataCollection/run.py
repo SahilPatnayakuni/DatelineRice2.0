@@ -5,6 +5,7 @@ import requests, sys, webhoseio
 import metadata_extraction.metadata_extraction
 import deduping.deduping
 import collecting-data.pull_search
+import collecting-data.pull_feeds
 
 current_batch_objs = list()
 
@@ -46,13 +47,13 @@ def pull_from_search():
 	#         except Exception as e:
 	#             break
 	#     output = webhoseio.get_next()
-		
+
 	for link in webhose_newsriver_urls:
 		source = requests.get(link, timeout=5)
 		BS = BeautifulSoup(source.content, "html.parser")
 		print("LINK: " + link + "\n")
 		print('\tURL: ' + source.url + "\n")
-		
+
 		try:
 			print ('\t' + BS.find('title').text + "\n")
 		except Exception as e:
@@ -72,12 +73,17 @@ def pull_from_search():
 		print("\tSUMMARY: " + str(article.summary) + "\n")
 
 def pull_from_feeds():
-	pass
+	"""
+	Elegantly finesses the extraction of complex RSS data from the
+	tumultuous Cision feed.
+	"""
+	cf = CisionFeed()
+	return cf.parse()
 
 def extract_metadata(url, articleData):
 	me = MetadataExtractor(url, articleData)
 	me.extract_missing()
-	
+
 	return me.article_data
 
 def is_uniq_article(obj):
@@ -101,7 +107,7 @@ if __name__ == "__main__":
 
 	for article in all_articles:
 
-		extracted_data.append(extract_metadata(article.url, article))
+		extracted_data.append(extract_metadata(article))
 
 		if is_uniq_article(article) and is_valid_article(article):
 			# get people, look them up
