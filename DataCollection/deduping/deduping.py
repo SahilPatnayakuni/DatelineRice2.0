@@ -200,7 +200,7 @@ def score_rices(string1, string2, rng = 100):
     idxs2 = rice_idxs(data1)
     if len(idxs1) == 0 or len(idxs2) == 0:
         print('no rice mentions')
-        return string_edit_check(data1, data2) / min(len(data1), len(data2))
+        return string_edit_check(data1, data2) / max(len(data1), len(data2))
     else:
         total = 0
         for idx1 in idxs1:
@@ -220,16 +220,4 @@ def score_split(string1, string2):
     data1 = list(filter(lambda x: x != ' ', data1))
     data2 = list(filter(lambda x: x != ' ', data2))
     return string_edit_check(data1, data2)
-
-
-def testing():
-    print("#1:", string_edit_check("abcfeg", "xabcdeg") == 2)
-    print("#2:", string_edit_check("", "xcdeg") == 5)
-    print("#3:", string_edit_check("123123456", "123456") == 3)
-
-    print("4:", unshorten_url("http://www.youtube.com"))
-    # print('w')
-    print("5:", unshorten_url("http://y2u.be/j4dMnAPZu70") == "https://www.youtube.com/watch?v=j4dMnAPZu70")
-    print("6:", unshorten_url("https://bit.ly/2NhJtop"))
-    print("7:", unshorten_url("https://www.youtube.com/watch?v=j4dMnAPZu70"))
 
