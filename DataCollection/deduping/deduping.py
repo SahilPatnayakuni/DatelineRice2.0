@@ -14,6 +14,8 @@ def check_dup(article):
         return True
 
 
+
+
     #string edit distance call
 
     #tf/idf call
@@ -230,7 +232,4 @@ def testing():
     print("5:", unshorten_url("http://y2u.be/j4dMnAPZu70") == "https://www.youtube.com/watch?v=j4dMnAPZu70")
     print("6:", unshorten_url("https://bit.ly/2NhJtop"))
     print("7:", unshorten_url("https://www.youtube.com/watch?v=j4dMnAPZu70"))
-
-
-testing()
 
