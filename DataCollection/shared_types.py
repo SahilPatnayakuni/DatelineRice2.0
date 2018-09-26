@@ -1,4 +1,4 @@
-import json 
+import json
 
 class ArticleData:
     def __init__(self, url=None, headline=None, description=None, publication_date=None, authors=None, outlet=None, body_text=None):
